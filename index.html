@@ -1,0 +1,108 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MLBB BRL Coin Calculator</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #f9f9f9;
+      padding: 20px;
+      max-width: 500px;
+      margin: auto;
+    }
+    h2 {
+      text-align: center;
+      color: #222;
+    }
+    input, button {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      font-size: 16px;
+    }
+    table {
+      width: 100%;
+      margin-top: 20px;
+      border-collapse: collapse;
+      background: #fff;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: center;
+      font-size: 14px;
+    }
+    th {
+      background-color: #007bff;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <h2>💎 MLBB BRL Coin Calculator 💎</h2>
+
+  <label>💵 MMK Amount (Smile One):</label>
+  <input type="number" id="mmkInput" placeholder="ဥပမာ - 78450" />
+
+  <label>📈 Profit % (အမြတ်):</label>
+  <input type="number" id="profitInput" value="2" />
+
+  <button onclick="calculate()">💡 တွက်မယ်</button>
+
+  <table>
+    <thead>
+      <tr>
+        <th>No</th>
+        <th>Dia Plan</th>
+        <th>Coin</th>
+        <th>MMK Result</th>
+        <th>အမြတ်</th>
+        <th>Total MMK</th>
+      </tr>
+    </thead>
+    <tbody id="resultBody">
+    </tbody>
+  </table>
+
+  <script>
+    const plans = [
+      { name: "Weekly Pass", coin: 76 },
+      { name: "Twilight Pass", coin: 402.5 },
+      { name: "86", coin: 61.5 },
+      { name: "172", coin: 122 },
+      { name: "257", coin: 177.5 },
+      { name: "343", coin: 239 },
+      { name: "429", coin: 299.5 },
+      { name: "514", coin: 355 },
+      { name: "600", coin: 416.5 },
+      { name: "706", coin: 480 }
+    ];
+
+    function calculate() {
+      const mmk = parseFloat(document.getElementById('mmkInput').value);
+      const profit = parseFloat(document.getElementById('profitInput').value);
+      const tbody = document.getElementById('resultBody');
+      tbody.innerHTML = "";
+
+      plans.forEach((plan, i) => {
+        const mmkResult = (mmk / 10000) * plan.coin;
+        const profitMMK = mmkResult * (profit / 100);
+        const total = mmkResult + profitMMK;
+
+        const row = `<tr>
+          <td>${i + 1}</td>
+          <td>${plan.name}</td>
+          <td>${plan.coin}</td>
+          <td>${mmkResult.toFixed(2)}</td>
+          <td>${profitMMK.toFixed(2)}</td>
+          <td>${total.toFixed(2)}</td>
+        </tr>`;
+        tbody.innerHTML += row;
+      });
+    }
+  </script>
+</body>
+</html>
